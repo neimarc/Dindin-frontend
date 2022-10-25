@@ -1,0 +1,11 @@
+.container-signIn {
+    background-image: url(../../assets/background.png);
+    background-position: center; 
+    background-repeat: no-repeat;
+    height: 100vh;
+    background-size: cover;
+    justify-content: center;
+    position: relative;
+    align-items: center;
+    display: flex;
+}
