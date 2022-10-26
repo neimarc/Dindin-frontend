@@ -1,0 +1,10 @@
+select, input {
+    background-color: #ffffff;
+    height: 58px;
+    border-radius: 5px;
+    border: 1px solid #555555;
+    padding: 0 16px;
+    font-size: 16px;
+    font-weight: normal;
+    font-family: 'Rubik', sans-serif;
+}
