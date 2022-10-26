@@ -8,4 +8,65 @@
     position: relative;
     align-items: center;
     display: flex;
+    font-family: 'Rubik', sans-serif;
+}
+
+.content-signIn {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 50px;
+}
+
+.left {
+    display: flex;
+    width: 50%;
+    color: white;
+    flex-direction: column;
+}
+
+.left h1 {
+    font-size: 40px;
+    line-height: 50px
+}
+
+.left span {
+    color: #7978D9;
+}
+
+.left h3 {
+    font-size: 22px;
+    font-weight: normal;
+    margin-top: 24px;
+}
+
+.left button {
+    margin-top: 40px;
+    width: 235px;
+}
+
+.right {
+    display: flex;
+    align-items: center;
+    width: 50%;
+    justify-content: flex-end
+}
+
+.right form {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 400px;
+    min-height: 420px;
+    padding: 40px 24px;
+    background-color: white;
+}
+
+.right h2 {
+    font-weight: 500;
+    color: #7978D9;
+}
+
+.right form button {
+    margin-top: 52px
 }

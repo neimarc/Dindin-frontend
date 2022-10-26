@@ -4,3 +4,16 @@
     left: 50px;
     height: 40px;
 }
+
+.inputs-container {
+    display: flex;
+    width: 100%;
+    margin-top: 24px;
+    flex-direction: column;
+}
+
+.inputs-container label {
+    color: #484848;
+    margin-bottom: 8px;
+    font-family: 'Rubik', sans-serif;
+}

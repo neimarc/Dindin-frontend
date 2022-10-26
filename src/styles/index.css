@@ -1,5 +1,7 @@
+/* Assim todas os componentes terão acesso a esses css */
 @import url('./custom-classes.css');
-/* Assim todas os componentes terão acesso a esse css de classes customizadas */
+@import url('./inputs.css');
+@import url('./buttons.css');
 
 * {
   box-sizing: border-box;
