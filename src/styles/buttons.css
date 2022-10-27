@@ -1,6 +1,7 @@
 button {
     all: unset;
     display: flex;
+    box-sizing: border-box;
     justify-content: center;
     align-items: center;
     width: 100%;
@@ -40,8 +41,8 @@ button {
 }
 
 .btn-white {
-    color:  white;
-    background-color: #7978D9;
+    color:  #7978D9;
+    background-color: white;
 }    
         
 
