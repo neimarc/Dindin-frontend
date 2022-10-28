@@ -1,8 +1,41 @@
 header {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     background: linear-gradient(90.23deg, #05EDE3 0.02%, #645FFB 99.63%);
     height: 224px;
     width: 100%;
     padding: 40px 50px; 
+}
+
+.content-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.content-header img {
+    cursor: pointer;
+}
+
+
+.container-signOut {
+    display: flex;
+    align-items: center;
+}
+
+.profile-place {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    color: white;
+}
+
+.signOut {
+    margin-left: 16px;
+    height: 24px;
+}
+
+.width-max {
+    width: 100%;
+    max-width: 1500px;
 }
