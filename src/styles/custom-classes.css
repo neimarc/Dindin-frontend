@@ -17,3 +17,8 @@
     margin-bottom: 8px;
     font-family: 'Rubik', sans-serif;
 }
+
+.width-limit {
+    max-width: 1500px;
+    width: 100px;
+}
