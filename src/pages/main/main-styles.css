@@ -21,3 +21,11 @@
     /* Esse cálculo é para descontar o top de 120px no altura da tela que já 
     está em 100vh */
 }
+
+.container-dada {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 32px;
+    margin: 26px;
+}
