@@ -22,10 +22,21 @@
     está em 100vh */
 }
 
-.container-dada {
+.container-data {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
     gap: 32px;
     margin: 26px;
+}
+
+.right-side {
+    display: flex;
+    flex-direction: column;
+    width: 260px;
+}
+
+.right-side button {
+    width: auto;
+    margin-top: 16px;
 }
