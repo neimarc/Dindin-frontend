@@ -13,7 +13,11 @@ function Main() {
                     <button>Filtros</button>
                     <div className='container-data'>
                         <Table/>
+
+                        <div className='right-side'> {/*O lado direito da página*/}
                         <ResumeTable/>
+                        <button className='btn-purple btn-small'>Adicionar Registro</button>
+                        </div>
                     </div>
                 </div>
             </section>
