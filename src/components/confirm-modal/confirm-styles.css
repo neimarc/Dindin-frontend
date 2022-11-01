@@ -1,0 +1,45 @@
+.confirm-box {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    background-color: #E4F2F0;
+    width: 188px;
+    height: 88px;
+    top: 68px;
+    right: 39px;
+    border-radius: 4px;
+}
+
+.confirm-box span {
+    font-family: 'Rubik', sans-serif;
+}
+
+.container-buttons {
+    display: flex;
+    width: 100%;
+    margin-top: 10px;
+    padding: 0 16px;
+}
+
+.container-buttons button {
+    height: 38px;
+}
+
+/* O último filho ,botão, do container-buttons */
+.container-buttons button:last-child {
+    margin-left: 6px;
+}
+
+/* Para desenhar uma seta para cima com linhas de borda */
+.arrow-up {
+    position: absolute;
+    width: 0;
+    height: 0;
+    top: -10px;
+    right: 10px;
+    border-right: 8px solid transparent;
+    border-left: 8px solid transparent;
+    border-bottom: 10px solid #E4F2F0
+}
