@@ -27,6 +27,7 @@
 .table-line {
     display: flex;
     justify-content: space-between;
+    position: relative;
     border-bottom: 1px solid #E0E0E0;
     height: 56px;
     margin-top: 8px;
@@ -62,3 +63,8 @@
 .date-column strong {
     margin-right: 4px;
 }
+
+.hand-buttons {
+    cursor: pointer;
+}
+ 
