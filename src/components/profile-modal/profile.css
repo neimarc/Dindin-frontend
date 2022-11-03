@@ -1,0 +1,15 @@
+.outside-back {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    background: rgba(61, 61, 61, 0.48);
+    width: 100vw;
+    height: 100vh;
+}
+
+.modal {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
