@@ -42,7 +42,7 @@ function Table() {
                     <div className='table-column-small hand-buttons'>
                         <img src={EditIcon} alt='edit' />
                         <img src={DeleteIcon} alt='delete' 
-                        onClick={() => setOpenModal(true)}/>
+                        onClick={() => setOpenModal(true)}/> {/*Para quando clicar no ícone o modal aparecer*/}
 
                     </div>
                     <ConfirmModal 
