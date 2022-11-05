@@ -1,14 +1,17 @@
 import './profile.css';
 import CloseIcon from '../../assets/close-icon.svg'
 
-function ProfileModal(open, close) {
+function ProfileModal({open, close}) {
     return (
         <>
             {open &&
                 <div className='outside-back'>
                     <div className='modal'>
 
-                        <img className='button-close' src={CloseIcon} alt='close-button'/>
+                        <img className='button-close' 
+                            src={CloseIcon} 
+                            alt='close-button'
+                            onClick={close}/>
                         <h2>Editar Perfil</h2>
                         <form>
                             <div className='inputs-container'>
@@ -27,6 +30,7 @@ function ProfileModal(open, close) {
                                 <label>Confirmação de senha</label>
                                 <input type='password'/>
                             </div>
+                            
                             <button className='btn-purple btn-small' >Confirmar</button>
                         </form>
 
