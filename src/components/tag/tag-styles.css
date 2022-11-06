@@ -1,0 +1,30 @@
+.tag-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 10px 0;
+    background-color: #FAFAFA;
+    width: 90px;
+    height: 24px;
+    box-shadow: 0px 2px 11px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    font-size: 14px;
+    cursor: pointer;
+    padding: 0 10px;
+}
+
+.tag-box span {
+    white-space: nowrap; /* Para não criar uma quebra de linha nos espaços em branco */ 
+     overflow: hidden; /*Para ocultar o excesso de texto */
+    text-overflow: ellipsis; /*Para colocar reticências no excesso ocultado */
+}
+
+.checked {
+ background-color: #7978D9;
+ color: white;
+}
+
+.unchecked {
+    background-color: #FAFAFA;
+    color: black;
+}
