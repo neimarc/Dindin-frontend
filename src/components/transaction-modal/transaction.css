@@ -8,10 +8,23 @@
     height: 100vh;
 }
 
+.transaction {
+    height: 100vh;
+}
+
+.transaction button {
+    margin-top: 18px ;
+}
+
+.transaction form {
+    margin-top: 3px;
+}
+
 .options-box {
     display: flex;
     width: 100%;
     color: white;
+   
 }
 
 .option-in {
