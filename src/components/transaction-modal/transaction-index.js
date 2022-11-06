@@ -11,12 +11,13 @@ function TransactionModal({open, close}) {
         <>
             {open &&
                 <div className='outside-back'>
-                    <div className='modal'>
+                    <div className='modal transaction'>
 
                         <img className='button-close' 
                             src={CloseIcon} 
                             alt='close-button'
                             onClick={close}/> {/*Clicando em CloseIcon aciona o fechamento do modal */}
+                        
                         <h2>Adicionar Registro</h2>
 
                         <div className='options-box'>
