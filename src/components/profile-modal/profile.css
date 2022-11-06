@@ -8,8 +8,3 @@
     height: 100vh;
 }
 
-.modal {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
