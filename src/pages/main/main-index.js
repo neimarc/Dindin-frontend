@@ -20,10 +20,11 @@ function Main() {
 
             <section>
                 <div className='width-limit'> {/*Para limitar o tamanho da sessão com a tabela */}
-                    <Filter />
                     <div className='container-data'>
-                        <Table />
-
+                        <div className='left-side'>
+                            <Filter />
+                            <Table />
+                        </div>
                         <div className='right-side'> {/*O lado direito da página*/}
                             <ResumeTable />
                             <button className='btn-purple btn-small'
