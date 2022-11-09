@@ -3,27 +3,29 @@ import Logo from '../../assets/logo.svg'
 import Profile from '../../assets/profile.svg'
 import Logout from '../../assets/logout.svg'
 import { useNavigate } from 'react-router-dom';
+import { clear } from '../../utils/storage';
 
-// O header recebe a prop editProfile do
-function Header(editProfile) {
+// A main usa a prop editProfile na chamada do Header
+function Header({ editProfile }) {
     const navigate = useNavigate();
 
-    function handleLogout(){
-        navigate('/'); {/*Para ir para a página raiz */}
+    function handleLogout() {
+        clear(); //Para limpar o localStorage quando o usuário fizer logoof
+        navigate('/'); {/*Para ir para a página raiz */ }
     }
     return (
         <header>
             <div className='content-header width-max'> {/* Para limitar o tamanho máximo do header  */}
-                <img src={Logo} alt='logo'/>
+                <img src={Logo} alt='logo' />
                 <div className='container-signOut'>
-                    <div 
-                    className='profile-place'
-                    onClick={editProfile}>
-                        <img src={Profile} alt='profile'/>
+                    <div
+                        className='profile-place'
+                        onClick={editProfile}> {/*A chamada dessa prop está na main. Ao clicar no ícone profile abre o modal editProfile */}
+                        <img src={Profile} alt='profile' />
                         <strong>Neimar</strong>
                     </div>
                     <img className='signOut' src={Logout} alt='logout'
-                    onClick={handleLogout}/>
+                        onClick={handleLogout} />
                 </div>
             </div>
         </header>
