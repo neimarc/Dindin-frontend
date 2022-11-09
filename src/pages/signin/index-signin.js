@@ -1,8 +1,9 @@
 import './signin-styless.css';
 import Logo from '../../assets/logo.svg'
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
-import api from '../../services/api'
+import { useEffect, useState } from 'react';
+import api from '../../services/api';
+import { getItem, setItem } from '../../utils/storage'
 
 function SignIn() {
 
@@ -11,6 +12,14 @@ function SignIn() {
   // Parar mudar o estado dos inputs;
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  useEffect(() => {
+    const token = getItem('token');
+    // Se tiver token o usuário vai logo ou se mantém na página de login
+    if (token) {
+      navigate('/main')
+    }
+  }, [])
 
 
   async function handleSubmit(event) {
@@ -21,17 +30,25 @@ function SignIn() {
         return
       }
 
-      // Na documentação do desafio tem que a api espera receber na rota login o email e a senha
+      // Na documentação do desafio tem que a api espera receber na rota login o email e a senha. Setar eles como
+      //se pede fazendo correspondência com as propriedades no frontend.
       const response = await api.post('/login', {
         email,
         senha: password
       })
 
-      console.log(response);
+      const { usuario, token } = response.data //Para pegar essas propriedades
+
+      //Setando a chave e o seu valor
+      setItem('token', token)
+      setItem('userId', usuario.id)
+      setItem('userName', usuario.nome)
+
       navigate('/main');
 
     } catch (error) {
       console.log(error)
+      //Depois retirar os console.log
     }
 
   }
