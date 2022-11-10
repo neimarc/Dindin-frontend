@@ -3,15 +3,40 @@ import Header from '../../components/header/header-index';
 import Table from '../../components/table/table-index';
 import ResumeTable from '../../components/resume-table/resume-index';
 import ProfileModal from '../../components/profile-modal/profile-index';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import TransactionModal from '../../components/transaction-modal/transaction-index';
 import Filter from '../../components/filter/filter-index';
+import api from '../../services/api';
+import { getItem } from '../../utils/storage';
 
 
 function Main() {
 
     const [openProfile, setOpenProfile] = useState(false); //Para abrir o modal do profile
     const [openTransactionModal, setOpenTransactionModal] = useState(false);
+    const [transations, setTransaction] = useState([]);
+
+    const token = getItem('token'); //Pegando o token que está no localStorage
+
+    async function loadTransactions() {
+        try {
+            const response = await api.get('/transacao', {
+                headers: {
+                    Authorization: `Bearer ${token}` //Enviar o token no cabeçalho da api para solicitar acesso 
+                }
+            })
+            //O setTransactions vai receber todo o conteúdo da response.data
+            setTransaction([...response.data])
+
+        } catch (error) {
+            console.log(error.response)
+        }
+    }
+
+    //Na primeiro renderização vai ativar a loadTransactions
+    useEffect(() => {
+        loadTransactions()
+    }, [])
 
     return (
         <div className='container-main'>
@@ -23,7 +48,7 @@ function Main() {
                     <div className='container-data'>
                         <div className='left-side'>
                             <Filter />
-                            <Table />
+                            <Table transations={transations} />
                         </div>
                         <div className='right-side'> {/*O lado direito da página*/}
                             <ResumeTable />
