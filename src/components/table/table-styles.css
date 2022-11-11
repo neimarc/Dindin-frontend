@@ -68,3 +68,14 @@
     cursor: pointer;
 }
  
+.positive-value {
+    color: #7861FF;
+    font-weight: bold;
+    font-family: 'Lato, sans-serif';
+}
+
+.negative-value {
+    color: #FA8C10;
+    font-weight: bold;
+    font-family: 'Lato, sans-serif';
+}
