@@ -5,6 +5,7 @@ import ArrowUp from '../../assets/arrow-up.svg';
 import ArrowDown from '../../assets/arrow-down.svg';
 import { useState } from 'react';
 import ConfirmModal from '../confirm-modal/confirm-index';
+import { dateFormat, dayFormat, moneyFormat } from '../../utils/formatter'
 
 // Transactions vem da Main
 function Table({ transactions }) {
@@ -38,11 +39,11 @@ function Table({ transactions }) {
             <div className='table-body'>
                 {transactions.map((trans) => (
                     <div className='table-line' key={trans.id}>
-                        <strong className='table-column-small date-column'>{trans.data}</strong>
-                        <span className='table-column-middle'>{trans.data}</span>
+                        <strong className='table-column-small date-column'>{dateFormat(trans.data)}</strong> {/*Para formatar a data*/}
+                        <span className='table-column-middle'>{dayFormat(trans.data)}</span>
                         <span className='table-column-big'>{trans.descricao}</span>
                         <span className='table-column-small'>{trans.categoria_nome}</span>
-                        <strong className='table-column-small'>trans.valor</strong>
+                        <strong className='table-column-small'>{moneyFormat(trans.valor)}</strong> {/*Para formatar o valor recebido */}
                         <div className='table-column-small hand-buttons'>
                             <img src={EditIcon} alt='edit' />
                             <img src={DeleteIcon} alt='delete'
