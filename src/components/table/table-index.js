@@ -43,7 +43,7 @@ function Table({ transactions }) {
                         <span className='table-column-middle'>{dayFormat(trans.data)}</span>
                         <span className='table-column-big'>{trans.descricao}</span>
                         <span className='table-column-small'>{trans.categoria_nome}</span>
-                        <strong className='table-column-small'>{moneyFormat(trans.valor)}</strong> {/*Para formatar o valor recebido */}
+                        <strong className={`table-column-small ${trans.tipo === 'entrada' ? 'positive-value' : 'negative-value'}`}>{moneyFormat(trans.valor)}</strong> {/* Função para formatar o valor recebido. A classe posi. e neg. -value é para mudar a cor do valor */}
                         <div className='table-column-small hand-buttons'>
                             <img src={EditIcon} alt='edit' />
                             <img src={DeleteIcon} alt='delete'
