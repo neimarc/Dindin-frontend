@@ -14,7 +14,7 @@ function Main() {
 
     const [openProfile, setOpenProfile] = useState(false); //Para abrir o modal do profile
     const [openTransactionModal, setOpenTransactionModal] = useState(false);
-    const [transations, setTransaction] = useState([]);
+    const [transactions, setTransactions] = useState([]); //Serão passadas na table
 
     const token = getItem('token'); //Pegando o token que está no localStorage
 
@@ -26,7 +26,7 @@ function Main() {
                 }
             })
             //O setTransactions vai receber todo o conteúdo da response.data
-            setTransaction([...response.data])
+            setTransactions([...response.data])
 
         } catch (error) {
             console.log(error.response)
@@ -48,7 +48,7 @@ function Main() {
                     <div className='container-data'>
                         <div className='left-side'>
                             <Filter />
-                            <Table transations={transations} />
+                            <Table transactions={transactions} />
                         </div>
                         <div className='right-side'> {/*O lado direito da página*/}
                             <ResumeTable />

@@ -15,9 +15,10 @@ export function moneyFormat(value) {
     return value.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })
 }
 
+//Para deixar a primeira letra do dia da semana maiúscula
 export function upperCase(word) {
     return word[0].toUpperCase() + word.slice(1, word.length)
-}
+}      //Mauscula na primeira concatenando com a palavra mantida depois da primeira letra 
 
 //O 'eee' é o formato de dia da semana em um palavra simples
 export function dayFormat(date) {

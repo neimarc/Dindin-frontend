@@ -15,15 +15,16 @@ function SignIn() {
 
   useEffect(() => {
     const token = getItem('token');
-    // Se tiver token o usuário vai logo ou se mantém na página de login
+    // Se tiver token o usuário vai logo ou se mantém na página principal
     if (token) {
       navigate('/main')
     }
   }, [])
 
 
-  async function handleSubmit(event) {
+  async function handleSubmit({ event }) {
     event.preventDefault();
+    // Para um evento(poderia ser qualquer nome) não forçar uma renderização toda vez.
 
     try {
       if (!email || !password) {
@@ -36,6 +37,7 @@ function SignIn() {
         email,
         senha: password
       })
+      console.log(response)
 
       const { usuario, token } = response.data //Para pegar essas propriedades
 
@@ -47,12 +49,11 @@ function SignIn() {
       navigate('/main');
 
     } catch (error) {
-      console.log(error)
-      //Depois retirar os console.log
+      console.log(error.message)
+
     }
 
   }
-  // Para um evento(poderia ser qualquer nome) não forçar uma renderização toda vez.
 
   return (
     <div className='container-signIn' >
@@ -86,7 +87,7 @@ function SignIn() {
               />
             </div>
             <div className='inputs-container'>
-              <label htmlFor='password' > Password </label>
+              <label htmlFor='password' > Senha </label>
               <input
                 name='password'
                 type='password'
