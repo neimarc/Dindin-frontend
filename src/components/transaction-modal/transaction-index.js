@@ -54,8 +54,32 @@ function TransactionModal({ open, close }) {
         setForm({ ...form, category: { id: actualCategory.id, name: actualCategory.descricao } })
     }
 
-    function submitEvent(event) {
+    async function submitEvent(event) {
         event.preventDefault()
+
+        //Para tornar válido o formato de data dd/mm/aaaa, pois a api espera o formato new date aaaa/mm/dd.
+        //A data vai separar os parâmetros na /
+        const [day, month, year] = form.date.split('/');
+
+        try {
+            //Validações para dar dinamicidade (tornarem automáticas) às propriedades abaixo
+            await api.post('/transacao', {
+
+                tipo: choice === 'in' ? 'entrada' : 'saida',
+                descricao: form.description,
+                valor: form.value,
+                data: new Date(`${year}-${month}-${day}`),
+                categoria_id: form.category.id
+            },
+                {
+                    headers: { Authorization: `Bearer ${token}` }
+                })
+
+            close(); //Para acionar o fechamento do modal
+            setForm({ ...defaultForm })
+        } catch (error) {
+
+        }
     }
 
     useEffect(() => {
@@ -100,7 +124,7 @@ function TransactionModal({ open, close }) {
                                     onChange={changeForm}
                                     name='value'
                                     value={form.value}
-                                    type='text'
+                                    type='number'
                                     required />
                             </div>
                             <div className='inputs-container'>
