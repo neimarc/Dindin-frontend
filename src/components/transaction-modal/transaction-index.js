@@ -28,8 +28,10 @@ function TransactionModal({ open, close }) {
                     Authorization: `Bearer ${token}`
                 }
             })
+            // Para ordenar a resposta da api em ordem alfabética
+            const orderedCategories = response.data.sort((a, b) => a - b)
 
-            setCategories([...response.data]) //Para setCategories receber todo conteúdo do response
+            setCategories(orderedCategories) //Para setCategories receber a resposta da api em ordem alfabética
         } catch (error) {
 
         }
@@ -38,6 +40,18 @@ function TransactionModal({ open, close }) {
     //Para fazer o setForm receber todo o conteúdo do form + alvo name receber o alvo value
     function changeForm(event) {
         setForm({ ...form, [event.target.name]: event.target.value })
+    }
+
+    function changeSelect(event) {
+        // Para encontrar, dentro do array de categorias, a categoria que está se utilizando no imput select
+
+        const actualCategory = categories.find((categ) => categ.descricao === event.target.value);
+
+        if (!actualCategory) {
+            return
+        }
+        //Se encontrar o actualCategory, o setForm receberá tudo o que estiver dentro do form + outras propriedades
+        setForm({ ...form, category: { id: actualCategory.id, name: actualCategory.descricao } })
     }
 
     function submitEvent(event) {
@@ -86,11 +100,18 @@ function TransactionModal({ open, close }) {
                                     onChange={changeForm}
                                     name='value'
                                     value={form.value}
-                                    type='text' />
+                                    type='text'
+                                    required />
                             </div>
                             <div className='inputs-container'>
                                 <label>Categorial</label>
-                                <select> {/*Para percorrer as categorias contidas na api e preencher os selects */}
+                                <select
+                                    onChange={changeSelect}
+                                    name='category'
+                                    value={form.category.name}
+                                    required>
+                                    <option>Selecione</option>
+                                    {/*Para percorrer as categorias contidas na api e preencher os selects */}
                                     {categories.map((categ) => (
                                         <option key={categ.id}
                                             value={categ.descricao}>
@@ -104,7 +125,8 @@ function TransactionModal({ open, close }) {
                                     onChange={changeForm}
                                     name='date'
                                     value={form.date}
-                                    type='text' />
+                                    type='text'
+                                    required />
                             </div>
                             <div className='inputs-container'>
                                 <label>Descrição</label>
@@ -112,7 +134,8 @@ function TransactionModal({ open, close }) {
                                     onChange={changeForm}
                                     name='description'
                                     value={form.description}
-                                    type='text' />
+                                    type='text'
+                                    required />
                             </div>
                             <button className='btn-purple btn-small' >Confirmar</button>
                         </form>
