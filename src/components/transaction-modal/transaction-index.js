@@ -3,6 +3,7 @@ import CloseIcon from '../../assets/close-icon.svg'
 import { useEffect, useState } from 'react';
 import api from '../../services/api';
 import { getItem } from '../../utils/storage'
+import { fillCategories } from '../..//utils/requisitions.js'
 
 //Formato padrão do form resetado
 const defaultForm = {
@@ -21,21 +22,7 @@ function TransactionModal({ open, close }) {
     const [categories, setCategories] = useState([]);
     const [form, setForm] = useState({ defaultForm }) //Para resetar o form
 
-    async function fillCategories() {
-        try {
-            const response = await api.get('/categoria', {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            })
-            // Para ordenar a resposta da api em ordem alfabética
-            const orderedCategories = response.data.sort((a, b) => a - b)
 
-            setCategories(orderedCategories) //Para setCategories receber a resposta da api em ordem alfabética
-        } catch (error) {
-
-        }
-    }
 
     //Para fazer o setForm receber todo o conteúdo do form + alvo name receber o alvo value
     function changeForm(event) {
