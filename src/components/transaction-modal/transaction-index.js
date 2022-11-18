@@ -3,7 +3,7 @@ import CloseIcon from '../../assets/close-icon.svg'
 import { useEffect, useState } from 'react';
 import api from '../../services/api';
 import { getItem } from '../../utils/storage'
-import { fillCategories } from '../..//utils/requisitions.js'
+import { fillCategories, loadTransactions } from '../..//utils/requisitions.js'
 
 //Formato padrão do form resetado
 const defaultForm = {
@@ -16,7 +16,8 @@ const defaultForm = {
     value: ''
 }
 
-function TransactionModal({ open, close }) {
+//A prop setTransactions terá o estado que modifica as transaçōes na Main
+function TransactionModal({ open, close, setTransactions }) {
     const token = getItem('token');
     const [choice, setChoice] = useState('out');
     const [categories, setCategories] = useState([]);
@@ -64,13 +65,23 @@ function TransactionModal({ open, close }) {
 
             close(); //Para acionar o fechamento do modal
             setForm({ ...defaultForm })
+
+            const everyTransaction = await loadTransactions(); //loadTransactions vem de requisitions
+            setTransactions([...everyTransaction])//Para adicionar automaticamento a nova transação ao estado
         } catch (error) {
 
         }
     }
 
     useEffect(() => {
-        fillCategories();
+        //É Preciso fazer uma função ao redor da const senão o useEffect acusa erro
+        async function receiveEveryCategorie() {
+            const everyCategorie = await fillCategories();
+
+            //o setCategories recebe todo o conteúdo do everyCategorie
+            setCategories([...everyCategorie])
+        }
+        receiveEveryCategorie()
     }, [])
 
     return (
