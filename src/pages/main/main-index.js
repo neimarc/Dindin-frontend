@@ -6,8 +6,7 @@ import ProfileModal from '../../components/profile-modal/profile-index';
 import { useEffect, useState } from 'react';
 import TransactionModal from '../../components/transaction-modal/transaction-index';
 import Filter from '../../components/filter/filter-index';
-import api from '../../services/api';
-import { getItem } from '../../utils/storage';
+import {loadTransactions} from '../../utils/requisitions'
 
 
 function Main() {
@@ -16,26 +15,17 @@ function Main() {
     const [openTransactionModal, setOpenTransactionModal] = useState(false);
     const [transactions, setTransactions] = useState([]); //Serão passadas na table
 
-    const token = getItem('token'); //Pegando o token que está no localStorage
-
-    async function loadTransactions() {
-        try {
-            const response = await api.get('/transacao', {
-                headers: {
-                    Authorization: `Bearer ${token}` //Enviar o token no cabeçalho da api para solicitar acesso 
-                }
-            })
-            //O setTransactions vai receber todo o conteúdo da response.data
-            setTransactions([...response.data])
-
-        } catch (error) {
-            console.log(error.response)
-        }
-    }
-
     //Na primeiro renderização vai ativar a loadTransactions
     useEffect(() => {
-        loadTransactions()
+        //É Preciso fazer uma função ao redor da const senão o useEffect acusa erro
+        async function receiveEveryTransaction() {
+        const everyTransaction = await loadTransactions()
+
+        setTransactions([...everyTransaction])
+        }
+
+
+        receiveEveryTransaction()
     }, [])
 
     return (
@@ -66,7 +56,9 @@ function Main() {
             <TransactionModal
                 open={openTransactionModal}
                 close={() => setOpenTransactionModal(false)} //Lógica de fechar o modal de adicionar transação
-            // As propos do modal de transação são declaradas em transaction-index.js
+                setTransactions={setTransactions}//Para perceber a inserção de novas transaçōes
+                // As propos do modal de transação são declaradas em transaction-index.js
+
             />
 
         </div>
