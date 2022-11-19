@@ -1,12 +1,32 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './filter-styles.css';
 import FilterIcon from '../../assets/filter-icon.svg'
 import Tag from '../tag/tag-index';
+import { fillCategories } from '../../utils/requisitions';
 
 
-function Filter() {
+function Filter({ transactions, setTransactions }) {
 
     const [open, setOpen] = useState(false);
+    const [categories, setCategories] = useState([]);
+
+    useEffect(() => {
+        async function receiveEveryCategorie() {
+            const everyCategorie = await fillCategories();
+            //Para prencher de azul somente a categoria selecionada.
+            everyCategorie.forEach(categ => {
+                categ.checked = false
+            });
+
+            setCategories([...everyCategorie])
+        }
+        //Para não fazer uma requisição quando fechar o filtro e garantir que sempre que abra o 
+        //filtro ele vai caregar corretamente
+        if (open) {
+            receiveEveryCategorie()
+        }
+
+    }, [open])
 
 
     return (
@@ -21,8 +41,19 @@ function Filter() {
                     <strong>Categoria</strong>
 
                     <div className='categories-content'>
-                        <Tag title='Compras' checked />
-                        <Tag title='Vendas' checked={false} />
+                        {/* Para aplicar dinamismo às adições das tags*/}
+                        {categories.map((categ) => (
+                            <Tag
+                                key={categ.id}
+                                id={categ.id}
+                                checked={categ.checked}
+                                title={categ.descricao}
+                                categories={categories}
+                                setCategories={setCategories}
+                            />
+
+                        ))}
+
                     </div>
 
                     <div className='buttons-filter'>
