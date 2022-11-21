@@ -6,16 +6,48 @@ import ArrowDown from '../../assets/arrow-down.svg';
 import { useState } from 'react';
 import ConfirmModal from '../confirm-modal/confirm-index';
 import { dateFormat, dayFormat, moneyFormat } from '../../utils/formatter'
+import api from '../../services/api'
+import { getItem } from '../../utils/storage'
+import { loadTransactions } from '../../utils/requisitions';
 
 // Transactions vem da Main
-function Table({ transactions }) {
+function Table({ transactions, setTransactions }) {
     const [arrowUp, setArrowUp] = useState(true); //Para mudar a seta para baixo ou para cima
     const [openModal, setOpenModal] = useState(false); //Para esconder (false) ou mostrar o modal (true)
+    const [presentItem, setPresentItem] = useState(null); // Para armazenar em qual item se clicou
 
-    function occultModal() {
-        console.log('delete');
-        setOpenModal(false);
-        ;
+    const token = getItem('token')
+
+    function openConfirm(trans) {
+        setPresentItem(trans); //Para saber em qual item foi clicado
+        setOpenModal(!openModal) // Para conseguir fechar o modal de apagar transação
+    }
+
+    async function occultModal() {
+        try {
+            const response = await api.delete(`/transacao/${presentItem.id}`, {//Para deletar a transação selecionada pelo id
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+
+            if (response.status > 204) {
+                return
+            }
+
+            //Se conseguiu deletar a transação deve fazer o reload das transações para trocar o valor do setTransactions
+            const everyTransaction = await loadTransactions();
+
+            setTransactions([...everyTransaction])
+
+        } catch (error) {
+        }
+
+        //Independentemente de dar certo ou errado vai terminar executando isso
+        finally {
+            setOpenModal(false);
+        }
+
     }
     return (
         <div className='container-table'>
@@ -43,17 +75,19 @@ function Table({ transactions }) {
                         <span className='table-column-middle'>{dayFormat(trans.data)}</span>
                         <span className='table-column-big'>{trans.descricao}</span>
                         <span className='table-column-small'>{trans.categoria_nome}</span>
-                        <strong className={`table-column-small ${trans.tipo === 'entrada' ? 'positive-value' : 'negative-value'}`}>{moneyFormat(trans.valor)}</strong> {/* Função para formatar o valor recebido. A classe posi. e neg. -value é para mudar a cor do valor */}
+                        <strong className={`table-column-small ${trans.tipo === 'entrada' ? 'positive-value' :
+                            'negative-value'}`}>{moneyFormat(trans.valor)}</strong> {/* Função para formatar o valor recebido. A classe posi. e neg. -value é para mudar a cor do valor */}
                         <div className='table-column-small hand-buttons'>
                             <img src={EditIcon} alt='edit' />
                             <img src={DeleteIcon} alt='delete'
-                                onClick={() => setOpenModal(true)} /> {/*Para quando clicar no ícone o modal aparecer*/}
+                                onClick={() => openConfirm(trans)} /> {/*Para quando clicar no ícone o modal aparecer*/}
 
                         </div>
                         <ConfirmModal
-                            open={openModal}
                             close={() => setOpenModal(false)}
-                            confirm={occultModal} />
+                            confirm={occultModal}
+                            open={openModal && trans.id === presentItem.id} /> {/*Só vai abri se openModal for igual a true e se trans.id for = 
+                            transação que foi clicada(a present.id). Para prevenir que abra o modal de apagar para todas as transações*/}
                     </div>
                 ))}
 
