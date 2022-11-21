@@ -4,7 +4,7 @@ import { getItem } from '../../utils/storage';
 import { useEffect, useState } from 'react';
 import { moneyFormat } from '../../utils/formatter';
 
-function ResumeTable() {
+function ResumeTable({ transactions }) {
 
     const [extract, setExtract] = useState({
         in: 0,
@@ -38,8 +38,9 @@ function ResumeTable() {
     }
 
     useEffect(() => {
+        //Toda vez que as transações sofrerem mudança, a extractLoad é renderizada
         extractLoad()
-    }, [])
+    }, [transactions])
 
     return (
         <div className='resume-box'>
