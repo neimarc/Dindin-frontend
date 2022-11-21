@@ -6,7 +6,7 @@ import ProfileModal from '../../components/profile-modal/profile-index';
 import { useEffect, useState } from 'react';
 import TransactionModal from '../../components/transaction-modal/transaction-index';
 import Filter from '../../components/filter/filter-index';
-import {loadTransactions} from '../../utils/requisitions'
+import { loadTransactions } from '../../utils/requisitions'
 
 
 function Main() {
@@ -19,9 +19,9 @@ function Main() {
     useEffect(() => {
         //É Preciso fazer uma função ao redor da const senão o useEffect acusa erro
         async function receiveEveryTransaction() {
-        const everyTransaction = await loadTransactions()
+            const everyTransaction = await loadTransactions()
 
-        setTransactions([...everyTransaction])
+            setTransactions([...everyTransaction])
         }
 
 
@@ -38,12 +38,15 @@ function Main() {
                     <div className='container-data'>
                         <div className='left-side'>
                             <Filter />
-                            <Table transactions={transactions} />
+                            <Table
+                                transactions={transactions}
+                                setTransactions={setTransactions} /> {/*Vem do Table*/}
                         </div>
                         <div className='right-side'> {/*O lado direito da página*/}
                             <ResumeTable />
                             <button className='btn-purple btn-small'
-                                onClick={() => setOpenTransactionModal(true)}>
+                                onClick={() => setOpenTransactionModal(true)}
+                                setTransactions={transactions}> {/*Para atualizar os valores do resumo*/}
                                 Adicionar Registro</button>
                         </div>
                     </div>
@@ -57,7 +60,7 @@ function Main() {
                 open={openTransactionModal}
                 close={() => setOpenTransactionModal(false)} //Lógica de fechar o modal de adicionar transação
                 setTransactions={setTransactions}//Para perceber a inserção de novas transaçōes
-                // As propos do modal de transação são declaradas em transaction-index.js
+            // As propos do modal de transação são declaradas em transaction-index.js
 
             />
 
