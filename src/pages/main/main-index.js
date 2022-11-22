@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import TransactionModal from '../../components/transaction-modal/transaction-index';
 import Filter from '../../components/filter/filter-index';
 import { loadTransactions } from '../../utils/requisitions'
+import EditTransactionModal from '../../components/edit-transaction-modal copy/edit-transaction-index';
 
 
 function Main() {
@@ -14,6 +15,8 @@ function Main() {
     const [openProfile, setOpenProfile] = useState(false); //Para abrir o modal do profile
     const [openTransactionModal, setOpenTransactionModal] = useState(false);
     const [transactions, setTransactions] = useState([]); //Serão passadas na table
+    const [openModalEdit, setOpenModalEdit] = useState(false)
+    const [EditPresentItem, setEditPresentItem] = useState(null)
 
     //Na primeiro renderização vai ativar a loadTransactions
     useEffect(() => {
@@ -40,7 +43,11 @@ function Main() {
                             <Filter />
                             <Table
                                 transactions={transactions}
-                                setTransactions={setTransactions} /> {/*Vem do Table*/}
+                                setTransactions={setTransactions} {/*Vem do Table*/}
+                                setOpenModalEdit={setOpenModalEdit}
+                                setEditPresentItem={setEditPresentItem}
+
+                            />
                         </div>
                         <div className='right-side'> {/*O lado direito da página*/}
                             <ResumeTable />
@@ -53,9 +60,6 @@ function Main() {
                 </div>
             </section>
 
-            <ProfileModal
-                open={openProfile}
-                close={() => setOpenProfile(false)} /> {/*Para fechar o modal profile */}
             <TransactionModal
                 open={openTransactionModal}
                 close={() => setOpenTransactionModal(false)} //Lógica de fechar o modal de adicionar transação
@@ -63,7 +67,15 @@ function Main() {
             // As propos do modal de transação são declaradas em transaction-index.js
 
             />
+            <EditTransactionModal
+                open={openModalEdit}
+                setTransactions={setTransactions}
+                close={() => setOpenModalEdit(false)}
+                editPresentItem={editPresentItem} />
 
+            <ProfileModal
+                open={openProfile}
+                close={() => setOpenProfile(false)} /> {/*Para fechar o modal profile */}
         </div>
     )
 }
