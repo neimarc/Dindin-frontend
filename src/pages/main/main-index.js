@@ -16,7 +16,7 @@ function Main() {
     const [openTransactionModal, setOpenTransactionModal] = useState(false);
     const [transactions, setTransactions] = useState([]); //Serão passadas na table
     const [openModalEdit, setOpenModalEdit] = useState(false)
-    const [EditPresentItem, setEditPresentItem] = useState(null)
+    const [editPresentItem, setEditPresentItem] = useState(null)
 
     //Na primeiro renderização vai ativar a loadTransactions
     useEffect(() => {
