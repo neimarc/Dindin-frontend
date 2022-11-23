@@ -11,7 +11,7 @@ import { getItem } from '../../utils/storage'
 import { loadTransactions } from '../../utils/requisitions';
 
 // Transactions vem da Main
-function Table({ transactions, setTransactions }) {
+function Table({ transactions, setTransactions, setEditPresentItem, setOpenModalEdit }) {
     const [arrowUp, setArrowUp] = useState(true); //Para mudar a seta para baixo ou para cima
     const [openModal, setOpenModal] = useState(false); //Para esconder (false) ou mostrar o modal (true)
     const [presentItem, setPresentItem] = useState(null); // Para armazenar em qual item se clicou
@@ -49,6 +49,13 @@ function Table({ transactions, setTransactions }) {
         }
 
     }
+
+    function openEdit(trans) {
+        setOpenModalEdit(true);
+        setEditPresentItem(trans);
+        //Vai modificar o table na Main
+    }
+
     return (
         <div className='container-table'>
 
@@ -78,9 +85,13 @@ function Table({ transactions, setTransactions }) {
                         <strong className={`table-column-small ${trans.tipo === 'entrada' ? 'positive-value' :
                             'negative-value'}`}>{moneyFormat(trans.valor)}</strong> {/* Função para formatar o valor recebido. A classe posi. e neg. -value é para mudar a cor do valor */}
                         <div className='table-column-small hand-buttons'>
-                            <img src={EditIcon} alt='edit' />
-                            <img src={DeleteIcon} alt='delete'
-                                onClick={() => openConfirm(trans)} /> {/*Para quando clicar no ícone o modal aparecer*/}
+                            <img
+                                src={EditIcon} alt='edit' onClick={() => openEdit(trans)}
+                            />
+                            <img
+                                src={DeleteIcon} alt='delete'
+                                onClick={() => openConfirm(trans)}
+                            /> {/*Para quando clicar no ícone o modal aparecer*/}
 
                         </div>
                         <ConfirmModal
