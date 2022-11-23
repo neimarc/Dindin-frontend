@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import api from '../../services/api';
 import { getItem } from '../../utils/storage'
 import { fillCategories, loadTransactions } from '../../utils/requisitions.js'
+import { dayFormat } from '../../utils/formatter'
 
 //Formato padrão do form resetado
 const defaultForm = {
@@ -16,8 +17,9 @@ const defaultForm = {
     value: ''
 }
 
-//A prop setTransactions terá o estado que modifica as transaçōes na Main
-function EditTransactionModal({ open, close, setTransactions }) {
+//A prop setTransactions terá o estado que modifica as transaçōes na Main.
+//O setEditPresentItem é pra preencher o modal de editar transações toda vez que abri-lo 
+function EditTransactionModal({ open, close, setTransactions, editPresentItem }) {
     const token = getItem('token');
     const [choice, setChoice] = useState('out');
     const [categories, setCategories] = useState([]);
@@ -83,6 +85,28 @@ function EditTransactionModal({ open, close, setTransactions }) {
         }
         receiveEveryCategorie()
     }, [])
+
+    useEffect(() => {
+
+        if (editPresentItem) {
+            //São propriedades da transação do backend
+            const { categoria_id, categoria_nome, data, descricao, tipo, valor } = editPresentItem;
+
+
+            setForm({
+                value: valor,
+                category: {
+                    id: categoria_id,
+                    name: categoria_nome
+                },
+                date: dayFormat(data),
+                description: descricao
+            })
+
+            setChoice(tipo === 'entrada' ? 'in' : 'out')
+        }
+
+    }, [editPresentItem]) //Será aberto toda vez que o editPresentitem for invocado
 
     return (
         // Se open, que é chamado quando clica o botão Adicionar registro, na Main, então mostra tudo o que está codificado. Caso contrário, não mostra.
