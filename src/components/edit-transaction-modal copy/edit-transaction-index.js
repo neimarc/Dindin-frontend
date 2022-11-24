@@ -52,8 +52,9 @@ function EditTransactionModal({ open, close, setTransactions, editPresentItem })
         const [day, month, year] = form.date.split('/');
 
         try {
-            //Validações para dar dinamicidade (tornarem automáticas) às propriedades abaixo
-            await api.post('/transacao', {
+            //Validações para dar dinamicidade (tornarem automáticas) às propriedades abaixo.
+            //A transação é atualizada para cada id
+            await api.put(`/transacao/${editPresentItem.id}`, {
 
                 tipo: choice === 'in' ? 'entrada' : 'saida',
                 descricao: form.description,
@@ -120,7 +121,7 @@ function EditTransactionModal({ open, close, setTransactions, editPresentItem })
                             alt='close-button'
                             onClick={close} /> {/*Clicando em CloseIcon aciona o fechamento do modal */}
 
-                        <h2>Adicionar Registro</h2>
+                        <h2>Editar Registro</h2>
 
                         <div className='options-box'>
                             {/* Se choice for out, ativa a classe option-off. 
