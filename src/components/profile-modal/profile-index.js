@@ -2,7 +2,7 @@ import './profile.css';
 import CloseIcon from '../../assets/close-icon.svg';
 import api from '../../services/api';
 import { useEffect, useState } from 'react';
-import { getItem } from '../../utils/storage';
+import { getItem, setItem } from '../../utils/storage';
 
 const defaultForm = {
     name: '',
@@ -19,6 +19,45 @@ function ProfileModal({ open, close }) {
     //Para alterar o form dinamicamente
     function changeForm({ target }) {
         setForm({ ...form, [target.name]: target.value }) //Pega tudo do form e seta target.name alterando para target.value
+    }
+
+    async function forSubmit(event) {
+        event.preventDefault();
+
+        try {
+            if (!form.name || !form.confirmPassword || !form.email || !form.password) {
+                return
+            }
+
+            if (form.password !== form.confirmPassword) {
+                return
+            }
+
+            await api.put('/usuario', {
+
+                nome: form.name,
+                email: form.email,
+                senha: form.password
+
+            },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                })
+
+            setItem('userName', form.name)
+
+            close();
+            clearForm()
+
+        } catch (error) {
+            error.data()
+        }
+
+        function clearForm() {
+            setForm({ ...defaultForm })
+        }
     }
 
     useEffect(() => {
@@ -41,14 +80,17 @@ function ProfileModal({ open, close }) {
                     confirmPassword: ''
                 })
 
+
+
             } catch (error) {
 
             }
-
-            if (open) {
-                loadProfile() //A função será chamada sempre que o open for executado e true
-            }
         }
+
+        if (open) {
+            loadProfile() //A função será chamada sempre que o open for executado e true
+        }
+
     }, [open])
 
 
@@ -65,14 +107,15 @@ function ProfileModal({ open, close }) {
 
                         <h2>Editar Perfil</h2>
 
-                        <form>
+                        <form onSubmit={forSubmit}>
                             <div className='inputs-container'>
                                 <label>Nome</label>
                                 <input
                                     name='name' //Para conseguir pegar a propriedade name dentro do target.name
                                     type='text'
                                     value={form.name}
-                                    onChange={changeForm} />
+                                    onChange={changeForm}
+                                    required />
                             </div>
 
                             <div className='inputs-container'>
@@ -81,7 +124,8 @@ function ProfileModal({ open, close }) {
                                     name='email' //Para conseguir pegar a propriedade email dentro do target.email
                                     type='text'
                                     value={form.email}
-                                    onChange={changeForm} />
+                                    onChange={changeForm}
+                                    required />
                             </div>
                             <div className='inputs-container'>
                                 <label>Senha</label>
@@ -89,7 +133,8 @@ function ProfileModal({ open, close }) {
                                     type='password'
                                     name='password' //Para conseguir pegar a propriedade password dentro do target.password
                                     value={form.password}
-                                    onChange={changeForm} />
+                                    onChange={changeForm}
+                                    required />
                             </div>
                             <div className='inputs-container'>
                                 <label>Confirmação de senha</label>
@@ -97,7 +142,8 @@ function ProfileModal({ open, close }) {
                                     type='password'
                                     name='confirmPassword' //Para conseguir pegar a propriedade password dentro do target.password
                                     value={form.confirmPassword}
-                                    onChange={changeForm} />
+                                    onChange={changeForm}
+                                    required />
                             </div>
 
                             <button className='btn-purple btn-small' >Confirmar</button>
