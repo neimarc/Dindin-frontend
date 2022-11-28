@@ -3,7 +3,7 @@ import EditIcon from '../../assets/edit-icon.svg';
 import DeleteIcon from '../../assets/delete-icon.svg';
 import ArrowUp from '../../assets/arrow-up.svg';
 import ArrowDown from '../../assets/arrow-down.svg';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ConfirmModal from '../confirm-modal/confirm-index';
 import { dateFormat, dayFormat, moneyFormat } from '../../utils/formatter'
 import api from '../../services/api'
@@ -15,6 +15,7 @@ function Table({ transactions, setTransactions, setEditPresentItem, setOpenModal
     const [arrowUp, setArrowUp] = useState(true); //Para mudar a seta para baixo ou para cima
     const [openModal, setOpenModal] = useState(false); //Para esconder (false) ou mostrar o modal (true)
     const [presentItem, setPresentItem] = useState(null); // Para armazenar em qual item se clicou
+    const [sortingTransactions, setSortingTransactions] = useState([]);
 
     const token = getItem('token')
 
@@ -56,6 +57,23 @@ function Table({ transactions, setTransactions, setEditPresentItem, setOpenModal
         //Vai modificar o table na Main
     }
 
+    useEffect(() => {
+        const transactionArea = [...transactions];
+
+        //Se a seta estiver pra cima, ordena-se crescentemente
+        if (arrowUp) {
+            //Para ordenar as transações
+            transactionArea.sort((a, b) => new Date(a.data) - new Date(b.data));
+            setSortingTransactions([...transactionArea]);
+            return
+        }
+        //Se a seta estiver pra baixo, ordena-se decrescentemente
+        transactionArea.sort((a, b) => new Date(b.data) - new Date(a.data));
+        setSortingTransactions([...transactionArea]);
+
+        setSortingTransactions([...transactionArea])
+    }, [arrowUp, transactions]) //O useEffect vai ser acionado quando a seta ou o transactions mudarem 
+
     return (
         <div className='container-table'>
 
@@ -76,7 +94,7 @@ function Table({ transactions, setTransactions, setEditPresentItem, setOpenModal
             {/* As propriedades id, data, descricao, categoria_nome e valor, abaixo, foram tiradas da documentação da api */}
 
             <div className='table-body'>
-                {transactions.map((trans) => (
+                {sortingTransactions.map((trans) => (
                     <div className='table-line' key={trans.id}>
                         <strong className='table-column-small date-column'>{dateFormat(trans.data)}</strong> {/*Para formatar a data*/}
                         <span className='table-column-middle'>{dayFormat(trans.data)}</span>
