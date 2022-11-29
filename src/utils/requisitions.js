@@ -1,9 +1,11 @@
 import api from "../services/api";
 import { getItem } from "./storage";
 
-const token = getItem('token');
-
 export async function fillCategories() {
+
+    let token = ''; // Para armazenar o token que vai mudar para cada usuário
+    token = getItem('token');
+
     try {
         const response = await api.get('/categoria', {
             headers: {
@@ -20,6 +22,9 @@ export async function fillCategories() {
 }
 
 export async function loadTransactions() {
+
+    let token = '';
+    token = getItem('token');
 
     try {
         const response = await api.get('/transacao', {
