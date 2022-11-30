@@ -12,7 +12,9 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.2.2",
     "react-scripts": "5.0.1",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "yup": "^0.32.11",
+    "yup-locales": "^1.2.10"
   },
   "scripts": {
     "start": "PORT=3003 react-scripts start",
