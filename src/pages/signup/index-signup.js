@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'; // Importação para usar a linkagem
 import api from '../../services/api'
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { formSchema } from '../../utils/Validates/formSchema'
 
 
 const defaultForm = {
@@ -23,9 +24,12 @@ function SignUp() {
 
     try {
 
-      if (!form.name || !form.email || !form.password || !form.confirmPassword) {
-        return
-      }
+      await formSchema.validate(form);
+
+      //TODO: Testar se a validação funcionou
+      // if (!form.name || !form.email || !form.password || !form.confirmPassword) {
+      //   return
+      // }
       if (form.password !== form.confirmPassword) {
         return
       }
