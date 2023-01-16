@@ -25,7 +25,7 @@ function ResumeTable({ transactions }) {
 
             const { entrada, saida } = response.data;
 
-            //Para deixar os valores do extrato dinâmicos e formatados. Serão passados nos spans correspondentes
+
             setExtract({
                 in: moneyFormat(entrada),
                 out: moneyFormat(saida),
@@ -38,7 +38,7 @@ function ResumeTable({ transactions }) {
     }
 
     useEffect(() => {
-        //Toda vez que as transações sofrerem mudança, a extractLoad é renderizada
+
         extractLoad()
     }, [transactions])
 

@@ -3,7 +3,7 @@ import { getItem } from "./storage";
 
 export async function fillCategories() {
 
-    let token = ''; // Para armazenar o token que vai mudar para cada usuário
+    let token = '';
     token = getItem('token');
 
     try {
@@ -12,10 +12,10 @@ export async function fillCategories() {
                 Authorization: `Bearer ${token}`
             }
         })
-        // Para ordenar a resposta da api em ordem alfabética
+
         const orderedCategories = response.data.sort((a, b) => a - b)
 
-        return orderedCategories //Para setCategories receber a resposta da api em ordem alfabética
+        return orderedCategories
     } catch (error) {
 
     }
@@ -29,10 +29,10 @@ export async function loadTransactions() {
     try {
         const response = await api.get('/transacao', {
             headers: {
-                Authorization: `Bearer ${token}` //Enviar o token no cabeçalho da api para solicitar acesso 
+                Authorization: `Bearer ${token}`
             }
         })
-        //Retornar todo o conteúdo da response
+
         return response.data
 
     } catch (error) {
