@@ -14,7 +14,6 @@ function MainRoutes() {
 
         <Routes>
             <Route path='/' element={<SignIn />} />
-            {/* A / significa que é a rota raiz da página */}
             <Route path='/signup' element={<SignUp />} />
             <Route element={<ProtectRoutes redirectTo='/' />}>
                 <Route path='/main' element={<Main />} />

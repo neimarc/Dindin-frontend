@@ -9,74 +9,57 @@ import { dateFormat, dayFormat, moneyFormat } from '../../utils/formatter'
 import api from '../../services/api'
 import { getItem } from '../../utils/storage'
 import { loadTransactions } from '../../utils/requisitions';
-
-// Transactions vem da Main
 function Table({ transactions, setTransactions, setEditPresentItem, setOpenModalEdit }) {
-    const [arrowUp, setArrowUp] = useState(true); //Para mudar a seta para baixo ou para cima
-    const [openModal, setOpenModal] = useState(false); //Para esconder (false) ou mostrar o modal (true)
-    const [presentItem, setPresentItem] = useState(null); // Para armazenar em qual item se clicou
+    const [arrowUp, setArrowUp] = useState(true);
+    const [openModal, setOpenModal] = useState(false);
+    const [presentItem, setPresentItem] = useState(null);
     const [sortingTransactions, setSortingTransactions] = useState([]);
-
     const token = getItem('token')
-
     function openConfirm(trans) {
-        setPresentItem(trans); //Para saber em qual item foi clicado
-        setOpenModal(!openModal) // Para conseguir fechar o modal de apagar transação
+        setPresentItem(trans);
+        setOpenModal(!openModal)
     }
-
     async function occultModal() {
         try {
-            const response = await api.delete(`/transacao/${presentItem.id}`, {//Para deletar a transação selecionada pelo id
+            const response = await api.delete(`/transacao/${presentItem.id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             })
-
             if (response.status > 204) {
                 return
             }
 
-            //Se conseguiu deletar a transação deve fazer o reload das transações para trocar o valor do setTransactions
             const everyTransaction = await loadTransactions();
-
             setTransactions([...everyTransaction])
-
         } catch (error) {
         }
 
-        //Independentemente de dar certo ou errado vai terminar executando isso
         finally {
             setOpenModal(false);
         }
-
     }
-
     function openEdit(trans) {
         setOpenModalEdit(true);
         setEditPresentItem(trans);
-        //Vai modificar o table na Main
-    }
 
+    }
     useEffect(() => {
         const transactionArea = [...transactions];
 
-        //Se a seta estiver pra cima, ordena-se crescentemente
         if (arrowUp) {
-            //Para ordenar as transações
+
             transactionArea.sort((a, b) => new Date(a.data) - new Date(b.data));
             setSortingTransactions([...transactionArea]);
             return
         }
-        //Se a seta estiver pra baixo, ordena-se decrescentemente
+
         transactionArea.sort((a, b) => new Date(b.data) - new Date(a.data));
         setSortingTransactions([...transactionArea]);
-
         setSortingTransactions([...transactionArea])
-    }, [arrowUp, transactions]) //O useEffect vai ser acionado quando a seta ou o transactions mudarem 
-
+    }, [arrowUp, transactions])
     return (
         <div className='container-table'>
-
             <div className='table-head'>
                 <div className='table-column-small date-column'
                     onClick={() => setArrowUp(!arrowUp)}>
@@ -88,20 +71,17 @@ function Table({ transactions, setTransactions, setEditPresentItem, setOpenModal
                 <strong className='table-column-small'>Categoria</strong>
                 <strong className='table-column-small'>Valor</strong>
                 <div className='table-column-small'></div>
-
             </div>
-
-            {/* As propriedades id, data, descricao, categoria_nome e valor, abaixo, foram tiradas da documentação da api */}
-
+            { }
             <div className='table-body'>
                 {sortingTransactions.map((trans) => (
                     <div className='table-line' key={trans.id}>
-                        <strong className='table-column-small date-column'>{dateFormat(trans.data)}</strong> {/*Para formatar a data*/}
+                        <strong className='table-column-small date-column'>{dateFormat(trans.data)}</strong>
                         <span className='table-column-middle'>{dayFormat(trans.data)}</span>
                         <span className='table-column-big'>{trans.descricao}</span>
                         <span className='table-column-small'>{trans.categoria_nome}</span>
                         <strong className={`table-column-small ${trans.tipo === 'entrada' ? 'positive-value' :
-                            'negative-value'}`}>{moneyFormat(trans.valor)}</strong> {/* Função para formatar o valor recebido. A classe posi. e neg. -value é para mudar a cor do valor */}
+                            'negative-value'}`}>{moneyFormat(trans.valor)}</strong>
                         <div className='table-column-small hand-buttons'>
                             <img
                                 src={EditIcon} alt='edit' onClick={() => openEdit(trans)}
@@ -109,21 +89,16 @@ function Table({ transactions, setTransactions, setEditPresentItem, setOpenModal
                             <img
                                 src={DeleteIcon} alt='delete'
                                 onClick={() => openConfirm(trans)}
-                            /> {/*Para quando clicar no ícone o modal aparecer*/}
-
+                            />
                         </div>
                         <ConfirmModal
                             close={() => setOpenModal(false)}
                             confirm={occultModal}
-                            open={openModal && trans.id === presentItem.id} /> {/*Só vai abri se openModal for igual a true e se trans.id for = 
-                            transação que foi clicada(a present.id). Para prevenir que abra o modal de apagar para todas as transações*/}
+                            open={openModal && trans.id === presentItem.id} />
                     </div>
                 ))}
-
             </div>
-
         </div>
     )
 }
-
 export default Table;

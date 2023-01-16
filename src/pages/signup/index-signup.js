@@ -1,6 +1,6 @@
 import './signup-styless.css';
 import Logo from '../../assets/logo.svg';
-import { Link } from 'react-router-dom'; // Importação para usar a linkagem
+import { Link } from 'react-router-dom';
 import api from '../../services/api'
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -16,7 +16,7 @@ const defaultForm = {
 
 function SignUp() {
 
-  const [form, setForm] = useState({ ...defaultForm }); //É um objeto porque o defaultForm é um objeto 
+  const [form, setForm] = useState({ ...defaultForm });
   const navigate = useNavigate();
 
   async function submitRegister(event) {
@@ -26,10 +26,6 @@ function SignUp() {
 
       await formSchema.validate(form);
 
-      //TODO: Testar se a validação funcionou
-      // if (!form.name || !form.email || !form.password || !form.confirmPassword) {
-      //   return
-      // }
       if (form.password !== form.confirmPassword) {
         return
       }
@@ -45,7 +41,7 @@ function SignUp() {
         return
       }
 
-      navigate('/'); //Vai para a página raiz
+      navigate('/');
 
 
     } catch (error) {
@@ -54,7 +50,7 @@ function SignUp() {
   }
 
   function changeForm({ t }) {
-    setForm({ ...form, [t.name]: t.value }) //do form o t.name vai ser = t.value. t porque (o target) vai ser dinâmico
+    setForm({ ...form, [t.name]: t.value })
   }
 
   return (

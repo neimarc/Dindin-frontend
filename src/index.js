@@ -7,10 +7,8 @@ import MainRoutes from './routes.js';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <BrowserRouter> 
-    {/* Para ficar por volta de todas as rotas criadas no routes.js */}
-    <MainRoutes />
-    {/* Componente onde está todas as rotas */}
+    <BrowserRouter>
+      <MainRoutes />
     </BrowserRouter>
   </React.StrictMode>
 );

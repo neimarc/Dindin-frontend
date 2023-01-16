@@ -11,14 +11,15 @@ const defaultForm = {
     confirmPassword: ''
 }
 
+
 function ProfileModal({ open, close }) {
 
     const token = getItem('token');
     const [form, setForm] = useState({ ...defaultForm })
 
-    //Para alterar o form dinamicamente
+
     function changeForm({ target }) {
-        setForm({ ...form, [target.name]: target.value }) //Pega tudo do form e seta target.name alterando para target.value
+        setForm({ ...form, [target.name]: target.value })
     }
 
     async function forSubmit(event) {
@@ -33,13 +34,14 @@ function ProfileModal({ open, close }) {
                 return
             }
 
-            await api.put('/usuario', {
+            await api.put('/usuario',
+                {
 
-                nome: form.name,
-                email: form.email,
-                senha: form.password
+                    nome: form.name,
+                    email: form.email,
+                    senha: form.password
 
-            },
+                },
                 {
                     headers: {
                         Authorization: `Bearer ${token}`
@@ -65,7 +67,7 @@ function ProfileModal({ open, close }) {
         async function loadProfile() {
 
             try {
-                const response = await api.get('/usuario', { //Segundo o backend, o usuário é pego pelo id do token
+                const response = await api.get('/usuario', {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
@@ -88,7 +90,7 @@ function ProfileModal({ open, close }) {
         }
 
         if (open) {
-            loadProfile() //A função será chamada sempre que o open for executado e true
+            loadProfile()
         }
 
     }, [open])
@@ -111,7 +113,7 @@ function ProfileModal({ open, close }) {
                             <div className='inputs-container'>
                                 <label>Nome</label>
                                 <input
-                                    name='name' //Para conseguir pegar a propriedade name dentro do target.name
+                                    name='name'
                                     type='text'
                                     value={form.name}
                                     onChange={changeForm}
@@ -121,7 +123,7 @@ function ProfileModal({ open, close }) {
                             <div className='inputs-container'>
                                 <label>E-mail</label>
                                 <input
-                                    name='email' //Para conseguir pegar a propriedade email dentro do target.email
+                                    name='email'
                                     type='text'
                                     value={form.email}
                                     onChange={changeForm}
@@ -131,7 +133,7 @@ function ProfileModal({ open, close }) {
                                 <label>Senha</label>
                                 <input
                                     type='password'
-                                    name='password' //Para conseguir pegar a propriedade password dentro do target.password
+                                    name='password'
                                     value={form.password}
                                     onChange={changeForm}
                                     required />
@@ -140,7 +142,7 @@ function ProfileModal({ open, close }) {
                                 <label>Confirmação de senha</label>
                                 <input
                                     type='password'
-                                    name='confirmPassword' //Para conseguir pegar a propriedade password dentro do target.password
+                                    name='confirmPassword'
                                     value={form.confirmPassword}
                                     onChange={changeForm}
                                     required />
