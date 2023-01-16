@@ -1,4 +1,4 @@
-/* Assim todas os componentes terão acesso a esses css */
+
 @import url('./custom-classes.css');
 @import url('./inputs.css');
 @import url('./buttons.css');
