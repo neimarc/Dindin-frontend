@@ -28,12 +28,12 @@
     height: 38px;
 }
 
-/* O último filho ,botão, do container-buttons */
+
 .container-buttons button:last-child {
     margin-left: 6px;
 }
 
-/* Para desenhar uma seta para cima com linhas de borda */
+
 .arrow-up {
     position: absolute;
     width: 0;

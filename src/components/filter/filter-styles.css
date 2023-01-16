@@ -23,15 +23,15 @@
 }
 
 .btn-filter {
-    /* background-color: #FAFAFA; */
+   
     width: 90px;
     height: 32px;
-    /* color: black; */
-    /* margin-right: 4px; */
+   
+   
     border-radius: 10px;
-    /* box-shadow: 0px 2px 11px rgba(0, 0, 0, 0.1); */
+   
     font-family: 'Lato', sans-serif;
-    /* font-weight: normal; */
+   
 }
 
 .categories-content {

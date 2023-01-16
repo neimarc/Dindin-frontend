@@ -14,9 +14,9 @@
 }
 
 .tag-box span {
-    white-space: nowrap; /* Para não criar uma quebra de linha nos espaços em branco */ 
-     overflow: hidden; /*Para ocultar o excesso de texto */
-    text-overflow: ellipsis; /*Para colocar reticências no excesso ocultado */
+    white-space: nowrap; 
+     overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .checked {

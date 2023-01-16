@@ -18,8 +18,7 @@
     width: 100%;
     padding: 50px 50px 20px 50px;
     min-height: calc(100vh - 120px);
-    /* Esse cálculo é para descontar o top de 120px no altura da tela que já 
-    está em 100vh */
+   
 }
 
 .container-data {
